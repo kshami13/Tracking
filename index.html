@@ -47,6 +47,20 @@ const table = document.querySelector("#results tbody")
 
 table.innerHTML = ""
 
+if(!data || data.length === 0){
+
+table.innerHTML = `
+<tr>
+<td colspan="4" style="text-align:center">
+No items found for this order
+</td>
+</tr>
+`
+
+return
+
+}
+
 data.forEach(item => {
 
 table.innerHTML += `
