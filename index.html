@@ -1,21 +1,68 @@
-<p>
-    Order Tracker
-</p>
-<h2>
-    Order Tracking
-</h2>
-<p>
-    Search
-</p>
-<table>
-    <tbody>
-        <tr>
-            <td data-row="1">
-                ProductStatusLocal TrackingInternational Tracking
-            </td>
-        </tr>
-    </tbody>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Order Tracker</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body style="font-family: Arial; padding:40px">
+
+<h2>Order Tracking</h2>
+
+<input id="orderInput" placeholder="Enter Order Number" style="padding:10px">
+<button onclick="searchOrder()">Search</button>
+
+<br><br>
+
+<table border="1" cellpadding="10" id="results">
+<thead>
+<tr>
+<th>Product</th>
+<th>Status</th>
+<th>Local Tracking</th>
+<th>International Tracking</th>
+</tr>
+</thead>
+<tbody></tbody>
 </table>
-<p>
-    &lt;br&gt;&lt;br&gt;const supabaseUrl = "https://yausicnswimaputggffv.supabase.co"&lt;br&gt;&lt;br&gt;const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlhdXNpY25zd2ltYXB1dGdnZmZ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMyNDE5MDEsImV4cCI6MjA4ODgxNzkwMX0.ASonY_8-ZI5ep_aIO0CoT-6InjayicDWdhi7YmKVEcs"&lt;br&gt;&lt;br&gt;const client = supabase.createClient(supabaseUrl, supabaseKey)&lt;br&gt;&lt;br&gt;async function searchOrder(){&lt;br&gt;&lt;br&gt;const order = document.getElementById("orderInput").value&lt;br&gt;&lt;br&gt;const { data } = await client&lt;br&gt;.from("order_items")&lt;br&gt;.select("product_name,status,local_tracking,international_tracking")&lt;br&gt;.eq("order_number", order)&lt;br&gt;&lt;br&gt;const table = document.querySelector("#results tbody")&lt;br&gt;&lt;br&gt;table.innerHTML = ""&lt;br&gt;&lt;br&gt;data.forEach(item =&gt; {&lt;br&gt;&lt;br&gt;table.innerHTML += `&lt;br&gt;&lt;tr&gt;&lt;br&gt;&lt;td&gt;${item.product_name}&lt;/td&gt;&lt;br&gt;&lt;td&gt;${item.status}&lt;/td&gt;&lt;br&gt;&lt;td&gt;${item.local_tracking || ""}&lt;/td&gt;&lt;br&gt;&lt;td&gt;${item.international_tracking || ""}&lt;/td&gt;&lt;br&gt;&lt;/tr&gt;&lt;br&gt;`&lt;br&gt;&lt;br&gt;})&lt;br&gt;&lt;br&gt;}&lt;br&gt;&lt;br&gt;
-</p>
+
+<script>
+
+const supabaseUrl = "https://yausicnswimaputggffv.supabase.co"
+
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlhdXNpY25zd2ltYXB1dGdnZmZ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMyNDE5MDEsImV4cCI6MjA4ODgxNzkwMX0.ASonY_8-ZI5ep_aIO0CoT-6InjayicDWdhi7YmKVEcs"
+
+const client = supabase.createClient(supabaseUrl, supabaseKey)
+
+async function searchOrder(){
+
+const order = document.getElementById("orderInput").value
+
+const { data } = await client
+.from("order_items")
+.select("product_name,status,local_tracking,international_tracking")
+.eq("order_number", order)
+
+const table = document.querySelector("#results tbody")
+
+table.innerHTML = ""
+
+data.forEach(item => {
+
+table.innerHTML += `
+<tr>
+<td>${item.product_name}</td>
+<td>${item.status}</td>
+<td>${item.local_tracking || ""}</td>
+<td>${item.international_tracking || ""}</td>
+</tr>
+`
+
+})
+
+}
+
+</script>
+
+</body>
+</html>
