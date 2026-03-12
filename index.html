@@ -42,7 +42,7 @@ const order = document.getElementById("orderInput").value
 const { data, error } = await client
 .from("order_items")
 .select("order_number,product_name,status,local_tracking,international_tracking")
-.or(`order_number.eq.${order},product_name.ilike.%${order}%`)
+.or(`order_number.eq.${order},product_name.ilike.*${order}*`)
 
 const table = document.querySelector("#results tbody")
 
