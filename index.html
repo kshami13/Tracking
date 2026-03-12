@@ -43,7 +43,7 @@ const { data, error } = await client
 .from("order_items")
 .select("order_number,product_name,status,local_tracking,international_tracking")
 .or(`product_name.ilike.%${term}%,order_number.ilike.%${term}%`)
-
+  
 const table = document.querySelector("#results tbody")
 
 table.innerHTML = ""
