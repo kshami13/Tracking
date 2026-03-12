@@ -17,6 +17,7 @@
 <table border="1" cellpadding="10" id="results">
 <thead>
 <tr>
+<th>Order</th>
 <th>Product</th>
 <th>Status</th>
 <th>Local Tracking</th>
@@ -41,7 +42,10 @@ const order = document.getElementById("orderInput").value
 const { data } = await client
 .from("order_items")
 .select("product_name,status,local_tracking,international_tracking")
-.eq("order_number", order)
+const { data } = await supabase
+.from("order_items")
+.select("order_number,product_name,status,local_tracking,international_tracking")
+.or(`order_number.eq.${order},product_name.ilike.%${order}%`)
 
 const table = document.querySelector("#results tbody")
 
@@ -65,6 +69,7 @@ data.forEach(item => {
 
 table.innerHTML += `
 <tr>
+<td>${item.order_number}</td>
 <td>${item.product_name}</td>
 <td>${item.status}</td>
 <td>${item.local_tracking || ""}</td>
