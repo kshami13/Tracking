@@ -39,10 +39,7 @@ async function searchOrder(){
 
 const order = document.getElementById("orderInput").value
 
-const { data } = await client
-.from("order_items")
-.select("product_name,status,local_tracking,international_tracking")
-const { data } = await supabase
+const { data, error } = await client
 .from("order_items")
 .select("order_number,product_name,status,local_tracking,international_tracking")
 .or(`order_number.eq.${order},product_name.ilike.%${order}%`)
@@ -55,8 +52,8 @@ if(!data || data.length === 0){
 
 table.innerHTML = `
 <tr>
-<td colspan="4" style="text-align:center">
-No items found for this order
+<td colspan="5" style="text-align:center">
+No items found
 </td>
 </tr>
 `
@@ -80,7 +77,6 @@ table.innerHTML += `
 })
 
 }
-
 </script>
 
 </body>
